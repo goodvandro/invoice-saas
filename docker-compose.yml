@@ -1,0 +1,9 @@
+version: '3'
+services:
+  db:
+    image: mongo
+    container_name: invoice-db
+    ports:
+      - '27018:27017'
+    volumes:
+      - ./data:/data/db
