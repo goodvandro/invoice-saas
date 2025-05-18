@@ -1,4 +1,4 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
 const PUBLIC_ROUTES = ['/auth/login', '/auth/refresh'];
@@ -6,9 +6,15 @@ const PUBLIC_ROUTES = ['/auth/login', '/auth/refresh'];
 @Injectable()
 export class TenantHeaderMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    if (PUBLIC_ROUTES.includes(req.path)) {
+    if (PUBLIC_ROUTES.includes(req.originalUrl)) {
       const tenantHeader = req.headers['tenant-id'];
-      req.tenantId = Array.isArray(tenantHeader) ? tenantHeader[0] : tenantHeader || null;
+      const tenantId = Array.isArray(tenantHeader) ? tenantHeader[0] : tenantHeader;
+
+      if (!tenantId || typeof tenantId !== 'string') {
+        throw new UnauthorizedException('Missing tenant-id header');
+      }
+
+      req.tenantId = tenantId;
     }
 
     next();

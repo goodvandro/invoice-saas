@@ -9,6 +9,7 @@ import { UserRepository } from 'src/@core/user/repositories/user.repository';
 import { UserSchema } from 'src/infra/database/mongodb/schemas/user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TenantHeaderMiddleware } from 'src/common/middlewares/tenant-header.middleware';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TenantHeaderMiddleware } from 'src/common/middlewares/tenant-header.mid
   controllers: [AuthController],
   providers: [
     AuthService,
+    JwtStrategy,
     {
       provide: 'UserRepository',
       useClass: UserMongoRepository,
@@ -36,6 +38,6 @@ import { TenantHeaderMiddleware } from 'src/common/middlewares/tenant-header.mid
 })
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(TenantHeaderMiddleware).forRoutes('auth/login', 'auth/refresh');
+    consumer.apply(TenantHeaderMiddleware).forRoutes('/auth/login', 'auth/refresh');
   }
 }

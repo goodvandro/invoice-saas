@@ -3,8 +3,9 @@ import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { CreateInvoiceDto } from '../dtos/create-invoice.dto';
 import { InvoiceService } from '../services/invoice.service';
 import { AuthUser } from 'src/@core/auth/types/auth-user.interface';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
-@UseGuards()
+@UseGuards(JwtAuthGuard)
 @Controller('invoices')
 export class InvoiceController {
   constructor(private readonly service: InvoiceService) {}
