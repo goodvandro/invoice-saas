@@ -1,0 +1,20 @@
+POST /invoices HTTP/1.1
+Host: localhost:3000
+Content-Type: application/json
+tenant-id: empresa-alpha
+
+{
+  "customerName": "Cliente Exemplo",
+  "items": [
+    {
+      "description": "Serviço 1",
+      "quantity": 1,
+      "unitPrice": 150
+    },
+    {
+      "description": "Produto X",
+      "quantity": 2,
+      "unitPrice": 500
+    }
+  ]
+}

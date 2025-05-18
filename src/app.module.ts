@@ -6,6 +6,7 @@ import { TenantModule } from './modules/tenant/tenant.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
+import { InvoiceModule } from './modules/invoice/invoice.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { UserModule } from './modules/user/user.module';
     }),
     TenantModule,
     UserModule,
+    InvoiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
