@@ -1,4 +1,3 @@
-
 GET /invoices HTTP/1.1
 Host: localhost:3000
 tenant-id: empresa-alpha

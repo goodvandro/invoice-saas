@@ -1,28 +1,21 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { CreateInvoiceDto } from '../dtos/create-invoice.dto';
 import { InvoiceService } from '../services/invoice.service';
+import { AuthUser } from 'src/@core/auth/types/auth-user.interface';
 
+@UseGuards()
 @Controller('invoices')
 export class InvoiceController {
   constructor(private readonly service: InvoiceService) {}
 
   @Post()
-  async create(@Body() dto: CreateInvoiceDto, @Req() req: Request) {
-    const tenantId = req.tenantId;
-    if (!tenantId) {
-      throw new Error('Missing tenant context');
-    }
-
-    return this.service.createInvoice({ ...dto, tenantId });
+  async create(@Body() dto: CreateInvoiceDto, @CurrentUser() user: AuthUser) {
+    return this.service.createInvoice({ ...dto, tenantId: user.tenantId });
   }
 
   @Get()
-  async list(@Req() req: Request) {
-    const tenantId = req.tenantId;
-    if (!tenantId) {
-      throw new Error('Missing tenant context');
-    }
-    return this.service.listInvoices(tenantId);
+  async list(@CurrentUser() user: AuthUser) {
+    return this.service.listInvoices(user.tenantId);
   }
 }
