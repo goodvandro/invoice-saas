@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { InvoiceModule } from './modules/invoice/invoice.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { InvoiceModule } from './modules/invoice/invoice.module';
     TenantModule,
     UserModule,
     InvoiceModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
