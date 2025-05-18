@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 
 import { AuthController } from './controllers/auth.controller';
@@ -8,6 +8,7 @@ import { LoginUseCase } from 'src/@core/auth/use-cases/login.usecase';
 import { UserRepository } from 'src/@core/user/repositories/user.repository';
 import { UserSchema } from 'src/infra/database/mongodb/schemas/user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { TenantHeaderMiddleware } from 'src/common/middlewares/tenant-header.middleware';
 
 @Module({
   imports: [
@@ -33,4 +34,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     },
   ],
 })
-export class AuthModule {}
+export class AuthModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TenantHeaderMiddleware).forRoutes('auth/login', 'auth/refresh');
+  }
+}
