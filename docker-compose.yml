@@ -21,7 +21,7 @@ services:
       - .:/app
       - /app/node_modules
     environment:
-      - MONGO_URI=mongodb://root:root@db:27018/invoice?authSource=admin
+      - MONGO_URI=mongodb://root:root@db:27017/invoice?authSource=admin
     depends_on:
       - db
     command: npm run start:dev
