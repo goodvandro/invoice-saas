@@ -14,7 +14,7 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() dto: LoginDto, @Req() req: Request) {
-    const tenantId = req.tenantId;
+    const tenantId = req.headers['tenant-id'] as string;
     if (!tenantId) throw new Error('Missing tenant context');
 
     return this.service.login(tenantId, dto.email, dto.password);
