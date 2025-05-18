@@ -3,6 +3,6 @@ Host: localhost:3000
 Content-Type: application/json
 
 {
-  "name": "Empresa X",
-  "identifier": "empresa-x"
+  "name": "Empresa Alpha",
+  "identifier": "empresa-alpha"
 }
