@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateInvoiceDto } from '../dtos/create-invoice.dto';
 import { InvoiceService } from '../services/invoice.service';
@@ -15,5 +15,14 @@ export class InvoiceController {
     }
 
     return this.service.createInvoice({ ...dto, tenantId });
+  }
+
+  @Get()
+  async list(@Req() req: Request) {
+    const tenantId = req.tenantId;
+    if (!tenantId) {
+      throw new Error('Missing tenant context');
+    }
+    return this.service.listInvoices(tenantId);
   }
 }
