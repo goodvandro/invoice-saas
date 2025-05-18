@@ -5,5 +5,23 @@ services:
     container_name: invoice-db
     ports:
       - '27018:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - ./data:/data/db
+
+  be:
+    build:
+      context: .
+    container_name: invoice-be
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - MONGO_URI=mongodb://root:root@db:27018/invoice?authSource=admin
+    depends_on:
+      - db
+    command: npm run start:dev
