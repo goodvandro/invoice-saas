@@ -3,6 +3,7 @@ import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserService } from '../services/user.service';
 import { Request } from 'express';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { UserProps } from 'src/@core/user/entities/user.entity';
 
 @UseGuards(JwtAuthGuard)
 @Controller('users')
@@ -16,6 +17,11 @@ export class UserController {
       throw new Error('Tenant ID not found in request');
     }
 
-    return this.service.create({ ...dto, tenantId });
+    const data: Partial<UserProps> = {
+      ...dto,
+      tenantId,
+    };
+
+    return this.service.create(data as UserProps);
   }
 }

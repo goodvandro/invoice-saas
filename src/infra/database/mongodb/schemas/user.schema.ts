@@ -6,7 +6,11 @@ export interface UserDocument extends Document {
   name: string;
   email: string;
   password: string;
+  isActive?: boolean;
   createdAt: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+  roles?: string[];
 }
 
 export const UserSchema = new Schema<UserDocument>({

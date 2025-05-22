@@ -20,27 +20,20 @@ export class UserMongoRepository implements UserRepository {
       createdAt: user.createdAt,
     });
 
-    return new User(
-      created._id,
-      created.tenantId,
-      created.name,
-      created.email,
-      created.password,
-      created.createdAt,
-    );
+    return new User({ id: created._id, ...created });
   }
 
   async findByEmail(email: string, tenantId: string): Promise<User | null> {
     const user = await this.userModel.findOne({ email, tenantId });
     if (!user) return null;
 
-    return new User(user._id, user.tenantId, user.name, user.email, user.password, user.createdAt);
+    return new User({ id: user._id, ...user });
   }
 
   async findById(id: string, tenantId: string): Promise<User | null> {
     const user = await this.userModel.findOne({ _id: id, tenantId });
     if (!user) return null;
 
-    return new User(user._id, user.tenantId, user.name, user.email, user.password, user.createdAt);
+    return new User({ id: user._id, ...user });
   }
 }
