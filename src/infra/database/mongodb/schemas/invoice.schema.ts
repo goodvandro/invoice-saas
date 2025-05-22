@@ -1,4 +1,5 @@
 import { Document, Schema } from 'mongoose';
+import { BaseSchemaOptions } from './base.schema';
 
 export interface InvoiceItemDocument {
   description: string;
@@ -24,11 +25,16 @@ export const InvoiceItemSchema = new Schema<InvoiceItemDocument>(
   { _id: false },
 );
 
-export const InvoiceSchema = new Schema<InvoiceDocument>({
-  _id: { type: String, required: true },
-  tenantId: { type: String, required: true, index: true },
-  customerName: { type: String, required: true },
-  items: { type: [InvoiceItemSchema], required: true },
-  total: { type: Number, required: true },
-  issuedAt: { type: Date, default: Date.now },
-});
+export const InvoiceSchema = new Schema<InvoiceDocument>(
+  {
+    _id: { type: String, required: true },
+    tenantId: { type: String, required: true, index: true },
+    customerName: { type: String, required: true },
+    items: { type: [InvoiceItemSchema], required: true },
+    total: { type: Number, required: true },
+    issuedAt: { type: Date, default: Date.now },
+  },
+  BaseSchemaOptions,
+);
+InvoiceSchema.index({ tenantId: 1, issuedAt: -1 });
+InvoiceSchema.index({ tenantId: 1, customerName: 1 });
