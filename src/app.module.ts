@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
 import { InvoiceModule } from './modules/invoice/invoice.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { IndexSyncService } from './indexing/index-sync.service';
 
 @Module({
   imports: [
@@ -25,6 +26,6 @@ import { AuthModule } from './modules/auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [IndexSyncService, AppService],
 })
 export class AppModule {}
