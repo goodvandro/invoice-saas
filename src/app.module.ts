@@ -1,31 +1,24 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
-import { TenantModule } from './modules/tenant/tenant.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './modules/user/user.module';
-import { InvoiceModule } from './modules/invoice/invoice.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { IndexSyncService } from './indexing/index-sync.service';
+import { InvoiceModule } from './modules/invoice/invoice.module';
+import { TenantModule } from './modules/tenant/tenant.module';
+import { UserModule } from './modules/user/user.module';
+import { DatabaseModule } from './modules/database/database.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (config: ConfigService) => ({
-        uri: config.get<string>('MONGO_URI', { infer: true }) || '', // fallback seguro
-      }),
-      inject: [ConfigService],
-    }),
+    DatabaseModule,
     TenantModule,
     UserModule,
     InvoiceModule,
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [IndexSyncService, AppService],
+  providers: [AppService],
 })
 export class AppModule {}
