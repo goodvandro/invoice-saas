@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 
 import { UserDocument } from '../schemas/user.schema';
 import {
-  FindUsersFilters,
+  FindUsersFilterParams,
   FindUsersResult,
   UserRepository,
 } from 'src/@core/user/repositories/user.repository';
@@ -41,7 +41,7 @@ export class UserMongoRepository implements UserRepository {
     return new User({ id: user._id, ...user });
   }
 
-  async findAll(filterParams: FindUsersFilters): Promise<FindUsersResult> {
+  async findAll(filterParams: FindUsersFilterParams): Promise<FindUsersResult> {
     const { tenantId, page = 1, limit = 10, name, email, rules } = filterParams;
 
     const filter = { tenantId };

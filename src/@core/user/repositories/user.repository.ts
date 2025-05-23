@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 
-export interface FindUsersFilters {
+export interface FindUsersFilterParams {
   tenantId: string;
   page?: number;
   limit?: number;
@@ -19,5 +19,5 @@ export interface UserRepository {
   findByEmail(email: string, tenantId: string): Promise<User | null>;
   findById(id: string, tenantId: string): Promise<User | null>;
 
-  findAll(filters: FindUsersFilters): Promise<FindUsersResult>;
+  findAll(filterParams: FindUsersFilterParams): Promise<FindUsersResult>;
 }
