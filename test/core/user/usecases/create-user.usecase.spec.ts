@@ -13,6 +13,7 @@ describe('CreateUserUseCase', () => {
       findByEmail: jest.fn<Promise<User | null>, [string, string]>(),
       create: jest.fn<Promise<User>, [User]>(),
     };
+    (bcrypt.hash as jest.Mock) = jest.fn().mockResolvedValue('hashed-pass');
     useCase = new CreateUserUseCase(mockRepo as UserRepository);
   });
 
@@ -47,7 +48,8 @@ describe('CreateUserUseCase', () => {
       password: 'hashed-password',
     });
     mockRepo.create.mockResolvedValue(fakeUser);
-    const res = await useCase.execute({
+
+    const result = await useCase.execute({
       tenantId: '1',
       name: 'John Doe',
       email: 'email@test.com',
@@ -58,6 +60,6 @@ describe('CreateUserUseCase', () => {
     expect(mockRepo.create).toHaveBeenCalledWith(
       expect.objectContaining({ password: 'hashed-pass' }),
     );
-    expect(res).toBe(fakeUser);
+    expect(result).toBe(fakeUser);
   });
 });
