@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TenantSchema } from 'src/infra/database/mongodb/schemas/tenant.schema';
 import { TenantController } from './controllers/tenant.controller';
 import { TenantService } from './services/tenant.service';
-import { TenantMongoRepository } from 'src/infra/database/mongodb/repositories/tenant.repository';
+import { TenantMongoRepository } from 'src/infra/database/mongodb/repositories/tenant-mongo.repository';
 import { CreateTenantUseCase } from 'src/@core/tenant/use-cases/create-tenant.usecase';
 import { TenantRepository } from 'src/@core/tenant/repositories/tenant.repository';
 

@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { UserSchema } from 'src/infra/database/mongodb/schemas/user.schema';
-import { UserMongoRepository } from 'src/infra/database/mongodb/repositories/user.repository';
+import { UserMongoRepository } from 'src/infra/database/mongodb/repositories/user-mongo.repository';
 import { CreateUserUseCase } from 'src/@core/user/use-cases/create-user.usecase';
 import { UserRepository } from 'src/@core/user/repositories/user.repository';
 
